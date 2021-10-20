@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box;
+}
+
+header {
+  margin: 0 auto;
+  max-width: 520px;
+}
+
+.posts {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post__item {
+  margin-top: 6px;
+  padding: 14px 30px;
+  font-size: 16px;
+  border: 1px solid lightgray;
+}
+
+.post__item--title .post__item--text {
+  margin: 0 auto;
+  max-width: fit-content;
+}
+
+.post__item--title {
+  font-size: 24px;
+}
+
+.post__item--text {
+  margin-top: 10px;
+}
