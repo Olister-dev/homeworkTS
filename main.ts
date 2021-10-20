@@ -34,11 +34,11 @@ async function runApplication() {
   // keyValueToFind,
   // patch
 
-  function updateObjectInArray<T, V>(
-    initialArray: T[],
+  function updateObjectInArray<ObjectShape, V>(
+    initialArray: ObjectShape[],
     keyToFind: string,
     keyValueToFind: V,
-    patch: Partial<T>
+    patch: Partial<ObjectShape>
   ) {
     const clonedArray = [...initialArray];
 
