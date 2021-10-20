@@ -1,31 +1,49 @@
-const url = "https://jsonplaceholder.typicode.com/posts";
-const newData = [];
-async function getData() {
-    try {
-        let response = await fetch(url);
-        let result = await response.json();
-        newData.push(...result);
-        const list = document.querySelector(".posts");
-        let key;
-        for (key in newData) {
-            list.innerHTML += `
-        <li class = "post__item">
-          <div class = "post__item--title">${newData[key].title}</div>
-          <div class = "post__item--text">${newData[key].body}</div>
-        </li>
-      `;
+async function runApplication() {
+    const url = "https://jsonplaceholder.typicode.com/posts";
+    async function getData() {
+        try {
+            const response = await fetch(url);
+            return response.json();
+        }
+        catch (error) {
+            console.log(error);
         }
     }
-    catch (error) {
-        console.log(error);
+    function renderData(users) {
+        const list = document.querySelector(".posts");
+        users.forEach((item) => {
+            list.innerHTML += `
+        <li class = "post__item">
+          <div class = "post__item--title">${item.title}</div>
+          <div class = "post__item--text">${item.body}</div>
+        </li>
+      `;
+        });
     }
+    function updateObjectInArray(initialArray, keyToFind, keyValueToFind, patch) {
+        const clonedArray = [...initialArray];
+        const modifiedclonedArray = clonedArray.map((el) => {
+            if (el[keyToFind] === keyValueToFind) {
+                return { ...el, ...patch };
+            }
+            else {
+                return el;
+            }
+        });
+        return modifiedclonedArray;
+    }
+    const users = await getData();
+    renderData(users);
+    const update = updateObjectInArray(users, "title", "sunt aut facere repellat provident occaecati excepturi optio reprehenderit", {
+        title: "gggg",
+        body: "ggffdee",
+    });
+    console.log(update);
+    const update2 = updateObjectInArray(users, "id", 3, {
+        title: "11111111",
+        userId: 110,
+    });
+    console.log(update2);
 }
-getData();
-console.log(newData.length);
-function updateObjectInArray(initialArray) {
-    const newArray = initialArray.map((el) => el);
-    console.log(newArray);
-    return newArray;
-}
-updateObjectInArray(newData);
+runApplication();
 //# sourceMappingURL=main.js.map

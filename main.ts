@@ -5,45 +5,75 @@ interface IUser {
   body: string;
 }
 
-const url: string = "https://jsonplaceholder.typicode.com/posts";
+async function runApplication() {
+  const url: string = "https://jsonplaceholder.typicode.com/posts";
 
-const newData: IUser[] = [];
+  async function getData() {
+    try {
+      const response = await fetch(url);
+      return response.json();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-async function getData() {
-  try {
-    let response = await fetch(url);
-    let result = await response.json();
-    newData.push(...result);
-
+  function renderData(users: IUser[]) {
     const list = document.querySelector(".posts");
 
-    let key: any;
-
-    for (key in newData) {
+    users.forEach((item) => {
       list.innerHTML += `
         <li class = "post__item">
-          <div class = "post__item--title">${newData[key].title}</div>
-          <div class = "post__item--text">${newData[key].body}</div>
+          <div class = "post__item--title">${item.title}</div>
+          <div class = "post__item--text">${item.body}</div>
         </li>
       `;
-    }
-  } catch (error) {
-    console.log(error);
+    });
   }
+
+  // keyToFind,
+  // keyValueToFind,
+  // patch
+
+  function updateObjectInArray<T, V>(
+    initialArray: T[],
+    keyToFind: string,
+    keyValueToFind: V,
+    patch: Partial<T>
+  ) {
+    const clonedArray = [...initialArray];
+
+    const modifiedclonedArray = clonedArray.map((el) => {
+      if (el[keyToFind] === keyValueToFind) {
+        return { ...el, ...patch };
+      } else {
+        return el;
+      }
+    });
+    return modifiedclonedArray;
+  }
+
+  const users = await getData();
+
+  renderData(users);
+
+  //Тестим модифікації
+
+  const update = updateObjectInArray<IUser, string>(
+    users,
+    "title",
+    "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    {
+      title: "gggg",
+      body: "ggffdee",
+    }
+  );
+  console.log(update);
+
+  const update2 = updateObjectInArray<IUser, number>(users, "id", 3, {
+    title: "11111111",
+    userId: 110,
+  });
+  console.log(update2);
 }
 
-getData();
-console.log(newData.length);
-
-function updateObjectInArray<ObjectShape>(initialArray: ObjectShape[]) {
-  const newArray = initialArray.map((el) => el);
-  console.log(newArray);
-
-  return newArray;
-}
-
-updateObjectInArray<IUser>(newData);
-
-// keyToFind,
-// keyValueToFind,
-// patch
+runApplication();
