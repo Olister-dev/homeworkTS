@@ -33,7 +33,17 @@ async function getData() {
 }
 
 getData();
-// console.log(newData.length);
-// function updateObjectInArray<A>(initialArray: ObjectShape[], keyToFind, keyValueToFind, patch))
+console.log(newData.length);
 
-// updateObjextInArray<IUser>(newData)
+function updateObjectInArray<ObjectShape>(initialArray: ObjectShape[]) {
+  const newArray = initialArray.map((el) => el);
+  console.log(newArray);
+
+  return newArray;
+}
+
+updateObjectInArray<IUser>(newData);
+
+// keyToFind,
+// keyValueToFind,
+// patch

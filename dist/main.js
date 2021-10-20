@@ -21,4 +21,11 @@ async function getData() {
     }
 }
 getData();
+console.log(newData.length);
+function updateObjectInArray(initialArray) {
+    const newArray = initialArray.map((el) => el);
+    console.log(newArray);
+    return newArray;
+}
+updateObjectInArray(newData);
 //# sourceMappingURL=main.js.map
